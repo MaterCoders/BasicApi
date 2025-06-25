@@ -41,6 +41,8 @@ A simple ASP.NET Core Web API project with Products CRUD operations.
 
 ### Running the Application
 
+#### Option 1: Run with .NET CLI (Local Development)
+
 1. Clone or download the project
 2. Navigate to the project directory:
    ```powershell
@@ -53,6 +55,26 @@ A simple ASP.NET Core Web API project with Products CRUD operations.
 4. Open your browser and navigate to:
    - API: `https://localhost:7xxx`
    - Swagger UI: `https://localhost:7xxx/swagger`
+
+#### Option 2: Run with Docker
+
+1. Make sure Docker is installed and running
+2. Build and run with Docker Compose:
+   ```powershell
+   docker-compose up --build
+   ```
+3. Or build and run with Docker commands:
+   ```powershell
+   # Build the image
+   docker build -t basicapi .
+   
+   # Run the container
+   docker run -p 5000:8080 -p 5001:8081 basicapi
+   ```
+4. Open your browser and navigate to:
+   - API: `http://localhost:5000`
+   - HTTPS API: `https://localhost:5001`
+   - Swagger UI: `http://localhost:5000/swagger`
 
 ### Sample Product Data
 
@@ -77,6 +99,9 @@ BasicApi/
 ├── Program.cs                  # Application entry point
 ├── BasicApi.csproj            # Project file
 ├── BasicApi.http              # HTTP test file
+├── Dockerfile                 # Docker container definition
+├── .dockerignore              # Docker ignore rules
+├── docker-compose.yml         # Docker Compose configuration
 └── README.md                  # This file
 ```
 
