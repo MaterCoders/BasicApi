@@ -56,14 +56,9 @@ namespace BasicApi.Controllers
                 return BadRequest("Product data is required.");
             }
 
-            if (string.IsNullOrWhiteSpace(product.Name))
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Product name is required.");
-            }
-
-            if (product.Price < 0)
-            {
-                return BadRequest("Product price cannot be negative.");
+                return BadRequest(ModelState);
             }
 
             product.Id = _nextId++;
@@ -89,20 +84,15 @@ namespace BasicApi.Controllers
                 return BadRequest("Product data is required.");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var existingProduct = _products.FirstOrDefault(p => p.Id == id);
             if (existingProduct == null)
             {
                 return NotFound($"Product with ID {id} not found.");
-            }
-
-            if (string.IsNullOrWhiteSpace(updatedProduct.Name))
-            {
-                return BadRequest("Product name is required.");
-            }
-
-            if (updatedProduct.Price < 0)
-            {
-                return BadRequest("Product price cannot be negative.");
             }
 
             // Update properties
