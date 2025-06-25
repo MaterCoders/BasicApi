@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using BasicApi.Models;
 
 namespace BasicApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] // Require authentication for all endpoints
     public class ProductsController : ControllerBase
     {
         // In-memory storage for demo purposes

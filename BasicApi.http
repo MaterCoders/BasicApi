@@ -1,6 +1,93 @@
-@BasicApi_HostAddress = http://localhost:5278
+@BasicApi_HostAddress = https://localhost:7089
 
+### Weather Forecast (No Auth Required)
 GET {{BasicApi_HostAddress}}/weatherforecast/
 Accept: application/json
+
+### Register a new user
+POST {{BasicApi_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Login with existing user
+POST {{BasicApi_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Login with regular user
+POST {{BasicApi_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user123"
+}
+
+### Get user profile (requires authentication)
+# @name login
+POST {{BasicApi_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+###
+@authToken = {{login.response.body.token}}
+
+GET {{BasicApi_HostAddress}}/api/auth/profile
+Authorization: Bearer {{authToken}}
+
+### Get all products (requires authentication)
+GET {{BasicApi_HostAddress}}/api/products
+Authorization: Bearer {{authToken}}
+
+### Create a new product (requires authentication)
+POST {{BasicApi_HostAddress}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "New Product",
+  "description": "A test product",
+  "price": 99.99,
+  "stockQuantity": 5
+}
+
+### Get product by ID (requires authentication)
+GET {{BasicApi_HostAddress}}/api/products/1
+Authorization: Bearer {{authToken}}
+
+### Update product (requires authentication)
+PUT {{BasicApi_HostAddress}}/api/products/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Updated Laptop",
+  "description": "Updated gaming laptop",
+  "price": 1199.99,
+  "stockQuantity": 8
+}
+
+### Search products (requires authentication)
+GET {{BasicApi_HostAddress}}/api/products/search?name=laptop
+Authorization: Bearer {{authToken}}
+
+### Validate token
+POST {{BasicApi_HostAddress}}/api/auth/validate
+Content-Type: application/json
+
+"{{authToken}}"
 
 ###
